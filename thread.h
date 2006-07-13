@@ -26,6 +26,7 @@ public:
     virtual void run() = 0;
     void join();
     void stop();
+    void destroy();
 
     int getReturnCode() { return return_code; }
 

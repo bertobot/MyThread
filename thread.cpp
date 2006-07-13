@@ -26,11 +26,13 @@ void thread::join() {
     return_code = pthread_join(actualThread, (void **)&return_code);
 }
 /////////////////////////////////////////////////
-thread::~thread() {
+void thread::destroy() {
     stop();
     pthread_attr_destroy(&attr);
+}
+/////////////////////////////////////////////////
+thread::~thread() {
 
-    printf("destruct\n");
 }
 /////////////////////////////////////////////////
 void *run_func(void *t) {
