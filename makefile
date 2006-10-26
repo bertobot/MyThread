@@ -11,6 +11,10 @@ thread.o
 lib: $(OBJ)
 	ar rs libMyThread.a $(OBJ)
 	
+lib_release: lib
+	mkdir MyThreadLib
+	cp libMyThread.a *.h MyThreadLib/
+
 mutex.o: mutex.cpp
 	$(CC) -c mutex.cpp
 	
