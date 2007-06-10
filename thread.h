@@ -23,9 +23,11 @@ public:
     thread();
 
     void start();
+    virtual void stop();
     virtual void run() = 0;
     void join();
-    void stop();
+
+    void forceQuit();
     void destroy();
 
     int getReturnCode() { return return_code; }

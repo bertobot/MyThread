@@ -17,7 +17,7 @@ void thread::start() {
     return_code = pthread_create(&actualThread, NULL, run_func, (void *)this);
 }
 /////////////////////////////////////////////////
-void thread::stop() {
+void thread::forceQuit() {
     // force-quit the thread
     pthread_exit(NULL);
 }
@@ -31,8 +31,12 @@ void thread::destroy() {
     pthread_attr_destroy(&attr);
 }
 /////////////////////////////////////////////////
-thread::~thread() {
+void thread::stop() {
 
+}
+/////////////////////////////////////////////////
+thread::~thread() {
+    destroy();
 }
 /////////////////////////////////////////////////
 void *run_func(void *t) {
