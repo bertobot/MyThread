@@ -42,6 +42,6 @@ thread::~thread() {
 void *run_func(void *t) {
     thread *tt = (thread *)t;
     tt->run();
-    tt->stop();
+//    tt->stop();
 }
 /////////////////////////////////////////////////
