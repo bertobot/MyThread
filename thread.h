@@ -23,7 +23,7 @@ public:
     thread();
 
     void start();
-    virtual void stop();
+    virtual void stop() = 0;
     virtual void run() = 0;
     void join();
 
