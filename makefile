@@ -1,4 +1,8 @@
 # makefile
+RELEASE_DIR=MyThread_release
+RELEASE_INCLUDE=$(RELEASE_DIR)/include/MyThread
+RELEASE_LIB=$(RELEASE_DIR)/lib
+
 CC=g++ -Wall -g3
 LIB=-lpthread
 OBJ=\
@@ -12,8 +16,10 @@ lib: $(OBJ)
 	ar rs libMyThread.a $(OBJ)
 	
 lib_release: lib
-	mkdir MyThreadLib
-	cp libMyThread.a *.h MyThreadLib/
+	mkdir -p $(RELEASE_INCLUDE)
+	cp *.h $(RELEASE_INCLUDE)
+	mkdir -p $(RELEASE_LIB)
+	cp libMyThread.a $(RELEASE_LIB)
 
 mutex.o: mutex.cpp
 	$(CC) -c mutex.cpp
