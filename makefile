@@ -15,6 +15,12 @@ lib_release: lib
 	mkdir MyThreadLib
 	cp libMyThread.a *.h MyThreadLib/
 
+install: lib
+	mkdir -p /usr/local/include/MyThread
+	cp *.h /usr/local/include/MyThread
+	mkdir -p /usr/local/lib/MyThread
+	cp *.a /usr/local/lib/MyThread
+
 mutex.o: mutex.cpp
 	$(CC) -c mutex.cpp
 	

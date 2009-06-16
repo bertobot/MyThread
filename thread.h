@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 /////////////////////////////////////////////////
+
+void *run_func(void *t);
+
 class thread {
 protected:
     int return_code;
