@@ -8,8 +8,11 @@
 
 #include "mutex.h"
 /////////////////////////////////////////////////
-mutex::mutex () {
+mutex::mutex() {
     pthread_mutex_init(&mutexsum, NULL);
+    //mutexsum = PTHREAD_MUTEX_INITIALIZER;
+    //TODO: incomplete?
+    //mutexsum =
 }
 /////////////////////////////////////////////////
 void mutex::lock() {

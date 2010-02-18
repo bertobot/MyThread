@@ -13,7 +13,7 @@
 #include <stdio.h>
 
 // func declaration of our friend
-void *run_func(void *t);
+static void *run_func(void *t);
 
 /////////////////////////////////////////////////
 class thread {

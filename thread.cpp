@@ -14,7 +14,8 @@ thread::thread() {
 }
 /////////////////////////////////////////////////
 void thread::start() {
-    return_code = pthread_create(&actualThread, NULL, run_func, (void *)this);
+    //return_code = pthread_create(&actualThread, NULL, run_func, (void *)this);
+    return_code = pthread_create(&actualThread, NULL, run_func, this);
 }
 /////////////////////////////////////////////////
 void thread::forceQuit() {
@@ -34,9 +35,19 @@ thread::~thread() {
     destroy();
 }
 /////////////////////////////////////////////////
-void *run_func(void *t) {
+static void *run_func(void *t) {
+
+    // TODO: try this
+    reinterpret_cast<thread *>(t)->run();
+
+    /*
     thread *tt = (thread *)t;
-    tt->run();
-//    tt->stop();
+    if (tt) {
+        tt->run();
+    }
+    else {
+        printf("thread error: object null?\n");
+    }
+    */
 }
 /////////////////////////////////////////////////
