@@ -44,9 +44,8 @@ thread::~thread() {
 static void *run_func(void *t) {
 
     // TODO: try this
-    reinterpret_cast<thread *>(t)->run();
+    //reinterpret_cast<thread *>(t)->run();
 
-    /*
     thread *tt = (thread *)t;
     if (tt) {
         tt->run();
@@ -54,6 +53,8 @@ static void *run_func(void *t) {
     else {
         printf("thread error: object null?\n");
     }
-    */
+
+    // try this too
+    pthread_exit(NULL);
 }
 /////////////////////////////////////////////////

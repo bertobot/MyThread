@@ -16,9 +16,6 @@
 static void *run_func(void *t);
 
 /////////////////////////////////////////////////
-
-void *run_func(void *t);
-
 class thread {
 protected:
     int return_code;
