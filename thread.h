@@ -26,6 +26,7 @@ protected:
 public:
     thread();
 
+    void setstate(int);
     void start();
     virtual void stop() = 0;
     virtual void run() = 0;

@@ -10,7 +10,12 @@
 thread::thread() {
     return_code = 0;
     pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    //pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+}
+/////////////////////////////////////////////////
+void thread::setstate(int s) {
+    pthread_attr_setdetachstate(&attr, s);
 }
 /////////////////////////////////////////////////
 void thread::start() {
@@ -32,7 +37,8 @@ void thread::destroy() {
 }
 /////////////////////////////////////////////////
 thread::~thread() {
-    destroy();
+    //destroy();
+    pthread_exit(NULL);
 }
 /////////////////////////////////////////////////
 static void *run_func(void *t) {
