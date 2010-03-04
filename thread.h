@@ -12,30 +12,41 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "mutex.h"
+
 // func declaration of our friend
 static void *run_func(void *t);
 
 /////////////////////////////////////////////////
 class thread {
 protected:
-    int return_code;
+    volatile int return_code;
+    volatile bool running;
+    volatile bool stopped;
+
     pthread_t actualThread;
     pthread_attr_t attr;
     friend void *run_func(void*);
+
+    mutex mut;
 
 public:
     thread();
 
     void setstate(int);
     void start();
-    virtual void stop() = 0;
+    void stop();
     virtual void run() = 0;
-    void join();
+    int join();
 
-    void forceQuit();
-    void destroy();
+    int forceQuit();
+    int destroy();
+    void exit();
+    void cleanup();
 
     int getReturnCode() { return return_code; }
+    bool isRunning() { return running && !stopped; }
+    bool isStopped() { return !running && stopped; }
 
     virtual ~thread();
 };
