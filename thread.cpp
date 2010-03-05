@@ -41,7 +41,8 @@ void thread::exit() {
 }
 /////////////////////////////////////////////////
 void thread::cleanup() {
-    printf("thread debug: joining...\n");
+    //printf("thread debug: joining...\n");
+
     if (join() ) {
         printf("thread critical: error joining!!!\n");
         return;
@@ -51,7 +52,8 @@ void thread::cleanup() {
     printf("thread debug: exiting...\n");
     pthread_exit(NULL);
     */
-    printf("thread debug: done.\n");
+
+    //printf("thread debug: done.\n");
 }
 /////////////////////////////////////////////////
 void thread::stop() {
