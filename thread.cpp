@@ -43,8 +43,10 @@ void thread::exit() {
 void thread::cleanup() {
     //printf("thread debug: joining...\n");
 
-    if (join() ) {
+    if (int rc = join() ) {
         printf("thread critical: error joining!!!\n");
+        printf("rc: %d\n", rc);
+
         return;
     }
 
