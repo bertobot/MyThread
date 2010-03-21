@@ -47,3 +47,4 @@ clean:
 
 mrproper: clean
 	rm -f libMyThread.a
+	rm -f *~

@@ -21,6 +21,7 @@ public:
 
     virtual void signal();
     virtual void wait();
+    virtual void wait(int);
     virtual void signalAll();
 
     bool empty();

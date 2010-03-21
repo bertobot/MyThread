@@ -29,6 +29,14 @@ void conditionVariable::wait() {
     --numWaiting;
 }
 /////////////////////////////////////////////////
+void conditionVariable::wait(int seconds) {
+    ++numWaiting;
+    lock();
+    pthread_cond_wait(&cv, &mutexsum);
+    unlock();
+    --numWaiting;
+}
+/////////////////////////////////////////////////
 void conditionVariable::signalAll() {
     pthread_cond_broadcast(&cv);
     //numWaiting = 0;
