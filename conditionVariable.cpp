@@ -9,9 +9,20 @@
 
 #include "conditionVariable.h"
 /////////////////////////////////////////////////
-conditionVariable::conditionVariable() : mutex() {
+//conditionVariable::conditionVariable() : mutex() {
+conditionVariable::conditionVariable() {
     pthread_cond_init(&cv, NULL);
     numWaiting = 0;
+
+    mtx = NULL;
+}
+/////////////////////////////////////////////////
+conditionVariable::conditionVariable(mutex *m) {
+    assocMutex(m);
+}
+/////////////////////////////////////////////////
+void conditionVariable::assocMutex(mutex *m) {
+    mtx = m;
 }
 /////////////////////////////////////////////////
 void conditionVariable::signal() {
@@ -23,17 +34,11 @@ void conditionVariable::signal() {
 /////////////////////////////////////////////////
 void conditionVariable::wait() {
     ++numWaiting;
-    lock();
-    pthread_cond_wait(&cv, &mutexsum);
-    unlock();
-    --numWaiting;
-}
-/////////////////////////////////////////////////
-void conditionVariable::wait(int seconds) {
-    ++numWaiting;
-    lock();
-    pthread_cond_wait(&cv, &mutexsum);
-    unlock();
+    //lock();
+
+    pthread_cond_wait(&cv, &(mtx->getMutex() ) );
+
+    //unlock();
     --numWaiting;
 }
 /////////////////////////////////////////////////

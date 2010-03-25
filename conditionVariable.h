@@ -11,17 +11,21 @@
 /////////////////////////////////////////////////
 #include "mutex.h"
 /////////////////////////////////////////////////
-class conditionVariable : public mutex {
+//class conditionVariable : public mutex {
+class conditionVariable {
 protected:
     pthread_cond_t cv;
+    mutex *mtx;
     int numWaiting;
 
 public:
     conditionVariable();
 
+    conditionVariable(mutex *);
+
+    void assocMutex(mutex *);
     virtual void signal();
     virtual void wait();
-    virtual void wait(int);
     virtual void signalAll();
 
     bool empty();
