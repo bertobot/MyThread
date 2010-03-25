@@ -27,6 +27,10 @@ void mutex::unlock() {
     pthread_mutex_unlock (&mutexsum);
 }
 /////////////////////////////////////////////////
+pthread_mutex_t & mutex::getMutex() {
+    return mutexsum;
+}
+/////////////////////////////////////////////////
 mutex::~mutex() {
     pthread_mutex_destroy(&mutexsum);
 }

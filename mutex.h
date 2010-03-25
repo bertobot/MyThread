@@ -23,6 +23,8 @@ public:
     void tryLock();
     void unlock();
 
+    pthread_mutex_t & getMutex();
+
     virtual ~mutex();
 };
 /////////////////////////////////////////////////
