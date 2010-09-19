@@ -15,16 +15,29 @@ mutex::mutex() {
     //mutexsum =
 }
 /////////////////////////////////////////////////
+mutex::mutex(bool d) {
+    pthread_mutex_init(&mutexsum, NULL);
+    debug = d;
+}
+/////////////////////////////////////////////////
+void mutex::setDebug(bool d) {
+    debug = d;
+}
+/////////////////////////////////////////////////
 void mutex::lock() {
     pthread_mutex_lock (&mutexsum);
+    
+    if (debug) printf("lock set.\n");
 }
 /////////////////////////////////////////////////
 void mutex::tryLock() {
     pthread_mutex_trylock(&mutexsum);
+    if (debug) printf("lock attempt.\n");
 }
 /////////////////////////////////////////////////
 void mutex::unlock() {
     pthread_mutex_unlock (&mutexsum);
+    if (debug) printf("lock unset.\n");
 }
 /////////////////////////////////////////////////
 pthread_mutex_t & mutex::getMutex() {
