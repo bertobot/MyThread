@@ -13,6 +13,7 @@ mutex::mutex() {
     //mutexsum = PTHREAD_MUTEX_INITIALIZER;
     //TODO: incomplete?
     //mutexsum =
+    debug = false;
 }
 /////////////////////////////////////////////////
 mutex::mutex(bool d) {
