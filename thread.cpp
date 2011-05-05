@@ -51,15 +51,10 @@ void thread::cleanup() {
         printf("thread critical: error joining!!!\n");
         printf("rc: %d\n", rc);
 
+		pthread_exit(NULL);
+
         return;
     }
-
-    /*
-    printf("thread debug: exiting...\n");
-    pthread_exit(NULL);
-    */
-
-    //printf("thread debug: done.\n");
 }
 /////////////////////////////////////////////////
 void thread::stop() {
@@ -95,5 +90,7 @@ static void *run_func(void *t) {
     else {
         printf("thread error: object null?\n");
     }
+
+	pthread_exit(NULL);
 }
 /////////////////////////////////////////////////
