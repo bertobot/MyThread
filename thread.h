@@ -14,9 +14,6 @@
 
 #include "mutex.h"
 
-// func declaration of our friend
-static void *run_func(void *t);
-
 /////////////////////////////////////////////////
 class thread {
 protected:
@@ -26,9 +23,10 @@ protected:
 
     pthread_t actualThread;
     pthread_attr_t attr;
-    friend void *run_func(void*);
 
     mutex mut;
+private:
+    static void * run_func(void*);
 
 public:
     thread();

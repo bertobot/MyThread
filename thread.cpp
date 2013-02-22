@@ -17,6 +17,30 @@ thread::thread() {
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 }
 /////////////////////////////////////////////////
+void * thread::run_func(void *t) {
+    // TODO: try this
+    //reinterpret_cast<thread *>(t)->run();
+    
+    thread *tt = reinterpret_cast<thread *>(t);
+
+    if (tt) {
+        tt->mut.lock();
+
+        tt->run();
+
+        tt->running = false;
+        tt->stopped = true;
+
+        tt->mut.unlock();
+    }
+    else {
+        printf("thread error: object null?\n");
+    }
+
+	pthread_exit(NULL);
+    return NULL;
+}
+/////////////////////////////////////////////////
 void thread::setstate(int s) {
     pthread_attr_setdetachstate(&attr, s);
 }
@@ -24,8 +48,7 @@ void thread::setstate(int s) {
 void thread::start() {
     running = true;
 
-    //return_code = pthread_create(&actualThread, NULL, run_func, (void *)this);
-    return_code = pthread_create(&actualThread, NULL, run_func, this);
+    return_code = pthread_create(&actualThread, NULL, thread::run_func, this);
 }
 /////////////////////////////////////////////////
 int thread::join() {
@@ -70,27 +93,5 @@ thread::~thread() {
     cleanup();
 
    mut.unlock();
-}
-/////////////////////////////////////////////////
-static void *run_func(void *t) {
-    // TODO: try this
-    //reinterpret_cast<thread *>(t)->run();
-
-    thread *tt = (thread *)t;
-    if (tt) {
-        tt->mut.lock();
-
-        tt->run();
-
-        tt->running = false;
-        tt->stopped = true;
-
-        tt->mut.unlock();
-    }
-    else {
-        printf("thread error: object null?\n");
-    }
-
-	pthread_exit(NULL);
 }
 /////////////////////////////////////////////////
