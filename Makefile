@@ -3,7 +3,12 @@ RELEASE_DIR=MyThread_release
 RELEASE_INCLUDE=$(RELEASE_DIR)/include/MyThread
 RELEASE_LIB=$(RELEASE_DIR)/lib
 
-CC=g++ -Wall -g3
+ifndef CC
+CC=g++
+endif
+
+CC+=-Wall $(CCFLAGS)
+
 LIB=-lpthread
 OBJ=\
 mutex.o \
