@@ -84,6 +84,31 @@ void thread::stop() {
     printf("base class thread stop called.  this may not be a good thing.\n");
 }
 /////////////////////////////////////////////////
+void thread::disableCancelState()
+{
+	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
+}
+/////////////////////////////////////////////////
+void thread::enableCancelState()
+{
+	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+}
+/////////////////////////////////////////////////
+void thread::setCancelTypeAsync()
+{
+	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+}
+/////////////////////////////////////////////////
+void thread::setCancelTypeDeferred()
+{
+	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
+}
+/////////////////////////////////////////////////
+int thread::cancel()
+{
+	return pthread_cancel(actualThread);
+}
+/////////////////////////////////////////////////
 thread::~thread() {
     // TODO: lock run and destructor (and maybe even constructor?)
 

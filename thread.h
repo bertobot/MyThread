@@ -38,13 +38,22 @@ public:
     int join();
 
     int forceQuit();
-    int destroy();
+
     void exit();
+	int cancel();
     void cleanup();
+	
+	// TODO: fix or remove.  do not use.
+	int destroy();
 
     int getReturnCode() { return return_code; }
     bool isRunning() { return running && !stopped; }
     bool isStopped() { return !running && stopped; }
+    
+    void enableCancelState();
+	void disableCancelState();
+	void setCancelTypeAsync();
+	void setCancelTypeDeferred();
 
     virtual ~thread();
 };
