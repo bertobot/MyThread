@@ -112,11 +112,11 @@ int thread::cancel()
 thread::~thread() {
     // TODO: lock run and destructor (and maybe even constructor?)
 
-    mut.lock();
+    //mut.lock();
 
     //destroy();
     cleanup();
 
-   mut.unlock();
+   //mut.unlock();
 }
 /////////////////////////////////////////////////
