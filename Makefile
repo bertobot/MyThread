@@ -13,7 +13,6 @@ LIB=-lpthread
 OBJ=\
 mutex.o \
 semaphore.o \
-binarySemaphore.o \
 conditionVariable.o \
 thread.o 
 

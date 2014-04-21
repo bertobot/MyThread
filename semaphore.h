@@ -15,19 +15,17 @@
 #include "conditionVariable.h"
 /////////////////////////////////////////////////
 class semaphore {
-protected:
+private:
     int
-        capacity,
-        slot,
-        numThreadsWaiting;
+        mCapacity,
+        mSlot,
+        mNumThreadsWaiting;
 
-    mutex mut;
-    bool locked;
-    conditionVariable cv;
+    mutex mLock, mVPLock;
+    conditionVariable mCv;
 
 public:
-    semaphore();
-    semaphore(int);
+    semaphore(int capacity=1);
 
     virtual void P();
     virtual void V();
@@ -38,7 +36,10 @@ public:
     int waiting();
     int slots();
 
+    void setCapacity(int capacity);
+
     virtual ~semaphore();
 };
 /////////////////////////////////////////////////
 #endif
+// vim: ts=4:sw=4:expandtab

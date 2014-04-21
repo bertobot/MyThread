@@ -12,16 +12,13 @@
 #include "semaphore.h"
 /////////////////////////////////////////////////
 class binarySemaphore : public semaphore {
-protected:
-
 public:
-    binarySemaphore();
-    binarySemaphore(int);
+    binarySemaphore(int capacity=0) : semaphore(c) {
+        if (capacity > 1) setCapacity(1);
+    }
 
-    void P();
-    void V();
-
-    virtual ~binarySemaphore();
+    virtual ~binarySemaphore() { }
 };
 /////////////////////////////////////////////////
 #endif
+// vim: ts=4:sw=4:expandtab

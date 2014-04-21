@@ -9,61 +9,72 @@
 
 #include "semaphore.h"
 /////////////////////////////////////////////////
-semaphore::semaphore() {
-    capacity = 1;
-    slot = 0;
-    numThreadsWaiting = 0;
-    locked = false;
-}
-/////////////////////////////////////////////////
-semaphore::semaphore(int c) {
-    capacity = c;
-    slot = 0;
-    numThreadsWaiting = 0;
-    locked = false;
+semaphore::semaphore(int mCapacity) {
+    mCapacity = mCapacity;
+    mSlot = 0;
+    mNumThreadsWaiting = 0;
 }
 /////////////////////////////////////////////////
 void semaphore::P() {
-    ++numThreadsWaiting;
-    if (++slot > capacity) {
-        slot = capacity;
-        cv.wait();
+    mLock.lock();
+
+    if (++mSlot > mCapacity) {
+        ++mNumThreadsWaiting;
+        mSlot = mCapacity;
+        mLock.unlock();
+
+        mCv.wait();
     }
+    else
+        mLock.unlock();
 }
 /////////////////////////////////////////////////
 void semaphore::V() {
-    if (--slot < capacity) {
-        cv.signal();
-        if (slot <= 0)
-            slot = 0;
+    mLock.lock();
+
+    if (mSlot == mCapacity) {
+        --mSlot;
+        --mNumThreadsWaiting;
+        mCv.signal();
     }
-    --numThreadsWaiting;
+
+    else if (--mSlot < 0)
+        mSlot = 0;
+
+    mLock.unlock();
 }
 /////////////////////////////////////////////////
 void semaphore::VP(semaphore& s) {
-    mut.lock();
+    mVPLock.lock();
+
     V();
     s.P();
-    mut.unlock();
+
+    mVPLock.unlock();
 }
 /////////////////////////////////////////////////
 bool semaphore::empty() {
-    return (slot == 0);
+    return (mSlot == 0);
 }
 /////////////////////////////////////////////////
 bool semaphore::full() {
-    return (slot >= capacity);
+    return (mSlot >= mCapacity);
 }
 /////////////////////////////////////////////////
 int semaphore::waiting() {
-    return numThreadsWaiting;
+    return mNumThreadsWaiting;
 }
 /////////////////////////////////////////////////
 int semaphore::slots() {
-    return slot;
+    return mSlot;
+}
+
+void semaphore::setCapacity(int capacity) {
+    mCapacity = capacity;
 }
 /////////////////////////////////////////////////
 semaphore::~semaphore() {
 
 }
 /////////////////////////////////////////////////
+// vim: ts=4:sw=4:expandtab
