@@ -9,10 +9,19 @@
 
 #include "semaphore.h"
 /////////////////////////////////////////////////
-semaphore::semaphore(int mCapacity) {
-    mCapacity = mCapacity;
+semaphore::semaphore(mutex *m, int capacity) {
+    mCapacity = capacity;
     mSlot = 0;
     mNumThreadsWaiting = 0;
+
+    mCv = new conditionVariable(m);
+}
+/////////////////////////////////////////////////
+semaphore::~semaphore() {
+    if (mCv) {
+        delete mCv;
+        mCv = NULL;
+    }
 }
 /////////////////////////////////////////////////
 void semaphore::P() {
@@ -23,7 +32,7 @@ void semaphore::P() {
         mSlot = mCapacity;
         mLock.unlock();
 
-        mCv.wait();
+        mCv->wait();
     }
     else
         mLock.unlock();
@@ -35,7 +44,7 @@ void semaphore::V() {
     if (mSlot == mCapacity) {
         --mSlot;
         --mNumThreadsWaiting;
-        mCv.signal();
+        mCv->signal();
     }
 
     else if (--mSlot < 0)
@@ -71,10 +80,6 @@ int semaphore::slots() {
 
 void semaphore::setCapacity(int capacity) {
     mCapacity = capacity;
-}
-/////////////////////////////////////////////////
-semaphore::~semaphore() {
-
 }
 /////////////////////////////////////////////////
 // vim: ts=4:sw=4:expandtab
