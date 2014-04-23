@@ -9,53 +9,41 @@
 
 #include "conditionVariable.h"
 /////////////////////////////////////////////////
-//conditionVariable::conditionVariable() : mutex() {
-conditionVariable::conditionVariable() {
-    pthread_cond_init(&cv, NULL);
-    numWaiting = 0;
-
-    mtx = NULL;
-}
-/////////////////////////////////////////////////
 conditionVariable::conditionVariable(mutex *m) {
-    assocMutex(m);
-}
-/////////////////////////////////////////////////
-void conditionVariable::assocMutex(mutex *m) {
-    mtx = m;
+    pthread_cond_init(&mCV, NULL);
+    mLock = m;
+    mWaiting = 0;
 }
 /////////////////////////////////////////////////
 void conditionVariable::signal() {
-    if (numWaiting > 0) {
-        pthread_cond_signal(&cv);
-        //--numWaiting;
+    if (mWaiting > 0) {
+        pthread_cond_signal(&mCV);
     }
 }
 /////////////////////////////////////////////////
 void conditionVariable::wait() {
-    ++numWaiting;
-    //lock();
+    ++mWaiting;
 
-    pthread_cond_wait(&cv, &(mtx->getMutex() ) );
+    pthread_cond_wait(&mCV, &(mLock.getMutex() ) );
 
-    //unlock();
-    --numWaiting;
+    --mWaiting;
 }
 /////////////////////////////////////////////////
-void conditionVariable::signalAll() {
-    pthread_cond_broadcast(&cv);
-    //numWaiting = 0;
+void conditionVariable::broadcast() {
+    pthread_cond_broadcast(&mCV);
 }
 /////////////////////////////////////////////////
 bool conditionVariable::empty() {
-    return (numWaiting == 0);
+    return (mWaiting == 0);
 }
 /////////////////////////////////////////////////
-int conditionVariable::waiting() {
-    return numWaiting;
+int conditionVariable::waiting() const {
+    return mWaiting;
 }
 /////////////////////////////////////////////////
 conditionVariable::~conditionVariable() {
-    pthread_cond_destroy(&cv);
+    pthread_cond_destroy(&mCV);
 }
 /////////////////////////////////////////////////
+// vim: ts=4:sw=4:expandtab
+

@@ -11,27 +11,31 @@
 /////////////////////////////////////////////////
 #include "mutex.h"
 /////////////////////////////////////////////////
-//class conditionVariable : public mutex {
 class conditionVariable {
-protected:
-    pthread_cond_t cv;
-    mutex *mtx;
-    int numWaiting;
-
 public:
-    conditionVariable();
-
-    conditionVariable(mutex *);
-
-    void assocMutex(mutex *);
-    virtual void signal();
-    virtual void wait();
-    virtual void signalAll();
-
-    bool empty();
-    int waiting();
+    conditionVariable(mutex *m);
 
     virtual ~conditionVariable();
+
+    void wait();
+
+    void signal();
+
+    void broadcast();
+
+    bool empty();
+
+    int waiting() const;
+
+private:
+    pthread_cond_t mCV; 
+
+    mutex mLock;
+
+    int mWaiting;
+
 };
 /////////////////////////////////////////////////
 #endif
+// vim: ts=4:sw=4:expandtab
+
