@@ -15,21 +15,14 @@
 #include "conditionVariable.h"
 /////////////////////////////////////////////////
 class semaphore {
-private:
-    int
-        mCapacity,
-        mSlot,
-        mNumThreadsWaiting;
-
-    mutex mLock, mVPLock;
-    conditionVariable mCv;
-
 public:
-    semaphore(int capacity=1);
+    semaphore(mutex *m, int capacity=1);
 
-    virtual void P();
-    virtual void V();
-    virtual void VP(semaphore&);
+    virtual ~semaphore();
+
+    void P();
+    void V();
+    void VP(semaphore&);
 
     bool empty();
     bool full();
@@ -38,7 +31,15 @@ public:
 
     void setCapacity(int capacity);
 
-    virtual ~semaphore();
+private:
+    int
+        mCapacity,
+        mSlot,
+        mNumThreadsWaiting;
+
+    mutex mLock, mVPLock;
+    conditionVariable *mCv;
+
 };
 /////////////////////////////////////////////////
 #endif
