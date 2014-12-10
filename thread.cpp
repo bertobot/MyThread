@@ -24,9 +24,11 @@ void * thread::run_func(void *t) {
     thread *tt = reinterpret_cast<thread *>(t);
 
     if (tt) {
-        tt->mut.lock();
+        //tt->mut.lock();
 
         tt->run();
+
+        tt->mut.lock();
 
         tt->running = false;
         tt->stopped = true;
