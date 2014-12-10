@@ -31,6 +31,10 @@ install: lib
 	mkdir -p /usr/local/lib
 	cp *.a /usr/local/lib
 
+uninstall:
+	rm -rf /usr/local/include/MyThread
+	rm -rf /usr/local/lib/libMyThread.a
+
 mutex.o: mutex.cpp
 	$(CC) -c mutex.cpp
 	
