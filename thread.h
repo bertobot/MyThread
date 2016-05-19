@@ -16,7 +16,7 @@
 
 /////////////////////////////////////////////////
 class thread {
-protected:
+private:
     volatile int return_code;
     volatile bool running;
     volatile bool stopped;
@@ -25,7 +25,7 @@ protected:
     pthread_attr_t attr;
 
     mutex mut;
-private:
+
     static void * run_func(void*);
 
 public:
