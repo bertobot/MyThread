@@ -13,7 +13,7 @@
 #include <stdio.h>
 /////////////////////////////////////////////////
 class mutex {
-protected:
+private:
     pthread_mutex_t mutexsum;
     bool taken;
     bool debug;
