@@ -68,6 +68,9 @@ void thread::exit() {
 void thread::cleanup() {
     //printf("thread debug: joining...\n");
 
+    // destroy attr
+    pthread_attr_destroy(&attr);
+
 	// only execute join if thread actually ran.
 	if (!running)
 		return;
